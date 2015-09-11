@@ -1,0 +1,29 @@
+- hosts: win
+  gather_facts: no
+  vars:
+    users:
+    - name: james
+      password:  "@j4m35s123123"
+      groups: ["Users", "Administrators"]
+    - name: jerry
+      password:  "@ns1bl3"
+      disabled: yes
+      groups: ["Users", "Administrators"]
+    - name: priscilla
+      password:  "@ns1bl3"
+      groups: ["Users", "Administrators"]
+    - name: bob
+      state: absent
+
+  tasks:
+
+    - name: Add User
+      win_user:
+        name: "{{ item.name }}"
+        password: "{{ item.password | default('') }}"
+        groups: "{{ item.groups | default('') }}"
+        state: "{{ item.state | default('present') }}"
+        account_disabled: "{{ item.disabled | default('no') }}"
+
+      with_items: users
+
