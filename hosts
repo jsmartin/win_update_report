@@ -1,0 +1,13 @@
+win1 ansible_ssh_host=10.1.2.3
+win2 ansible_ssh_host=10.1.2.4
+localhost ansible_python_interpreter="/usr/bin/env python" connection=local
+
+[win]
+win1
+win2
+
+[win:vars]
+ansible_connection=winrm
+ansible_ssh_port=5986
+ansible_ssh_user=Administrator
+ansible_ssh_pass=myTempPassword123!

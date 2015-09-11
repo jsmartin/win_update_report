@@ -1,0 +1,6 @@
+{% for host in groups["win"] %}
+{{ host }}
+{% for k in hostvars[host]['win_patches'] %}
+{{ hostvars[host]['win_patches'][k]['title'] }}
+{% endfor %}
+{% endfor %}

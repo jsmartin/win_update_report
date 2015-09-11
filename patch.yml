@@ -1,0 +1,30 @@
+- hosts: win
+  gather_facts: no
+  tasks:
+
+  - name: collect windows updates
+    win_updates_new: 
+      category_names:
+        - CriticalUpdates
+        - SecurityUpdates
+        - UpdateRollups 
+      log_path: c:\ansible_win_updates.txt
+      state: list 
+    register: output
+
+
+  - set_fact: 
+      win_patches: "{{ output.updates }}"
+
+  - debug: 
+      var: win_patches
+
+- hosts: localhost
+  connection: local
+  tasks:
+
+  - name: render report
+    template: 
+      src: template.j2  
+      dest: /tmp/report.txt
+
